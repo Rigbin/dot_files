@@ -1,0 +1,2 @@
+include "de-latin1-nodeadkeys.map"
+keycode 58 = Escape

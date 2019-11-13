@@ -1,0 +1,10 @@
+[alias]
+	unstage = reset HEAD --
+	last = log -1 HEAD --stat
+	co = checkout
+	cb = checkout -b
+	com = checkout master
+	b = branch
+	bd = branch -d
+	bdr = branch -d -r
+	ma = merge --abort

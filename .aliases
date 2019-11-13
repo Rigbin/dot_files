@@ -1,0 +1,74 @@
+file_function() {
+  if [ ! -n $1 ]; then
+    1="$HOME"
+  fi
+  nautilus $1 >/dev/null 2>&1 &
+}
+
+my_ps() {
+  ps aux | grep $1 | grep -v grep
+}
+
+sysupdate_function() {
+  if [ -f /etc/pacman.conf ]; then
+    sudo pacman -Syu --noconfirm && sudo pacman -Qdtq --noconfirm | sudo pacman -Rs - --noconfirm && sudo pacman -Sc --noconfirm
+  elif [ -d /etc/apt ]; then
+    sudo apt update && sudo apt dist-upgrate -y && sudo apt autoremove -y && sudo apt autoclean
+  fi
+}
+
+
+# colors
+if [ -x /usr/bin/dircolors ]; then
+  alias ls="ls --color=auto"
+  alias grep="grep --color=auto"
+  alias fgrep="fgrep --color=auto"
+  alias egrep="egrep --color=auto"
+  alias diff="diff --color=auto"
+fi
+
+# functions
+alias psa="my_ps"
+alias files="file_function"
+alias sysupdate="sysupdate_function"
+
+# filesystem
+alias cd..="cd .."
+alias ll="ls -hlF"
+alias la="ls -hAlF"
+alias l="ls -CF"
+alias .="source"
+
+if [ -x "$(command -v xdg-open)" ]; then
+  alias open=xdg-open
+fi
+
+# commandline
+alias free="free -h"
+alias df="df -h"
+alias du="du -h"
+export LESS="-F -X $LESS" ## let less display information, that fits the screen directly
+
+# git
+alias gits="git status"
+alias gitss="git status -s"
+alias gitc="git commit"
+alias gita="git add ."
+alias gitr="git reset HEAD -- " # unstage files
+alias gitl="git log --oneline --decorate --all --graph"
+if [[ -f .git_init ]]; then 
+  . .git_init
+fi 
+
+# java
+if [ -d "/usr/lib/jvm/java-8-openjdk" ]; then
+  alias java8="/usr/lib/jvm/java-8-openjdk/bin/java"
+  alias javac8="/usr/lib/jvm/java-8-openjdk/bin/javac"
+  export JAVA_HOME="/usr/lib/jvm/java-8-openjdk/"
+  PATH=${JAVA_HOME}bin:$PATH
+fi
+if [ -d "/usr/lib/jvm/java-11-openjdk" ]; then
+  alias java11="/usr/lib/jvm/java-11-openjdk/bin/java"
+  alias javac11="/usr/lib/jvm/java-11-openjdk/bin/javac"
+fi
+
