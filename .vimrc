@@ -33,8 +33,11 @@ imap <C-a> <Esc>gg0vG$
 nmap <C-y> :w<CR>
 imap <C-y> <Esc>:w<CR>a
 
-"Copy to Clipboard (on arch instal `gvim`, on debian/ubuntu install `vim-gtk` or `vim-gnome`)
+"Copy to Clipboard (on arch install `gvim`, on debian/ubuntu install `vim-gtk` or `vim-gnome`)
 xmap <C-c> "+y
+
+"Remap of unneeded 'ex'-Mode
+nmap Q :q!<CR>
 
 "Paste from Clipboard
 nmap <C-v> "+p
