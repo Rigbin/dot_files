@@ -56,8 +56,8 @@ alias gitc="git commit"
 alias gita="git add ."
 alias gitr="git reset HEAD -- " # unstage files
 alias gitl="git log --oneline --decorate --all --graph"
-if [[ -f .git_init ]]; then 
-  . .git_init
+if [[ -f ~/.git_init ]]; then 
+  . ~/.git_init
 fi 
 
 # java

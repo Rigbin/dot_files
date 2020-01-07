@@ -1,4 +1,4 @@
-ALTERNATE_EMAIL=<ADD-ALTERNATE-EMAIL-HERE>
+ALTERNATE_EMAIL="harald.schwab2@fh-joanneum.at"
 
 show_help() {
   echo "git_init is a simple helper to automate git init process in some way"
