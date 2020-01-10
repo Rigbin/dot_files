@@ -13,10 +13,13 @@ set shiftwidth=2
 set autoindent
 set expandtab
 set nocp
+set hidden
 set backspace=indent,eol,start
 
 "different indention for python
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+"deactivate 'expandtab' for makefiles
+autocm Filetype make setlocal noexpandtab
 
 "whitespace settings
 set listchars=eol:$,tab:>-,space:.,trail:~,extends:>,precedes:<,nbsp:%
@@ -36,8 +39,8 @@ imap <C-y> <Esc>:w<CR>a
 "Copy to Clipboard (on arch install `gvim`, on debian/ubuntu install `vim-gtk` or `vim-gnome`)
 xmap <C-c> "+y
 
-"Remap of unneeded 'ex'-Mode
-nmap Q :q!<CR>
+"Remap of unneeded 'ex'-Mode, quit force with Q in normal mode
+nmap Q :q<CR>
 
 "Paste from Clipboard
 nmap <C-v> "+p
@@ -59,4 +62,34 @@ nnoremap gn :bn<CR>
 nnoremap gl :ls<CR>
 " List all possible buffers an accept new buffer argument (eg to switch to buffer with #x)
 nnoremap gb :ls<CR>:b
+
+"""""""""""""""""""""""
+"Vim Explorer Settings"
+"""""""""""""""""""""""
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 15
+nmap <C-v> :Lexplore<CR>
+imap <C-v> <Esc>:Lexplore<CR>
+
+
+""""""""""""""""""""""""""""
+"Custom Shortcuts for Panes"
+""""""""""""""""""""""""""""
+nnoremap <C-p><C-v> :vsp 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Custom function to show diff for unsaved file                             "
+"from https://vim.fandom.com/wiki/Diff_current_buffer_and_the_original_file"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
 
