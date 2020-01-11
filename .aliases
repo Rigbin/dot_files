@@ -61,14 +61,21 @@ if [[ -f ~/.git_init ]]; then
 fi 
 
 # java
-if [ -d "/usr/lib/jvm/java-8-openjdk" ]; then
-  alias java8="/usr/lib/jvm/java-8-openjdk/bin/java"
-  alias javac8="/usr/lib/jvm/java-8-openjdk/bin/javac"
-  export JAVA_HOME="/usr/lib/jvm/java-8-openjdk/"
+JAVA8="/usr/lib/jvm/java-8-openjdk"
+if [ -d "$JAVA8" ]; then
+  alias java8="${JAVA8}/bin/java"
+  alias javac8="${JAVA8}/bin/javac"
+  export JAVA_HOME="$JAVA8"
   PATH=${JAVA_HOME}bin:$PATH
 fi
-if [ -d "/usr/lib/jvm/java-11-openjdk" ]; then
-  alias java11="/usr/lib/jvm/java-11-openjdk/bin/java"
-  alias javac11="/usr/lib/jvm/java-11-openjdk/bin/javac"
+JAVA11="/usr/lib/jvm/java-11-openjdk"
+if [ -d "$JAVA11" ]; then
+  alias java11="${JAVA11}/bin/java"
+  alias javac11="${JAVA11}/bin/javac"
+fi
+JAVA13="/usr/lib/jvm/java-13-jdk"
+if [ -d "$JAVA13" ]; then
+  alias java13="${JAVA13}/bin/java"
+  alias javac13="${JAVA13}/bin/javac"
 fi
 
