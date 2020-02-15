@@ -60,6 +60,11 @@ if [[ -f ~/.git_init ]]; then
   . ~/.git_init
 fi 
 
+# tmux
+if [ -x /usr/bin/tmux ]; then
+  alias st="tmux attach -t TMUX || tmux new -s TMUX"
+fi
+
 # java
 JAVA8="/usr/lib/jvm/java-8-openjdk"
 if [ -d "$JAVA8" ]; then

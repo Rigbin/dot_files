@@ -15,6 +15,7 @@ set expandtab
 set nocp
 set hidden
 set backspace=indent,eol,start
+set mouse=a
 
 "different indention for python
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
@@ -33,11 +34,12 @@ nmap <C-a> gg0vG$
 imap <C-a> <Esc>gg0vG$
 
 "Save
-nmap <C-y> :w<CR>
-imap <C-y> <Esc>:w<CR>a
+nmap <C-z> :w<CR>
+imap <C-z> <Esc>:w<CR>a
 
 "Copy to Clipboard (on arch install `gvim`, on debian/ubuntu install `vim-gtk` or `vim-gnome`)
 xmap <C-c> "+y
+vmap <C-c> "+y
 
 "Remap of unneeded 'ex'-Mode, quit force with Q in normal mode
 nmap Q :q<CR>
@@ -71,8 +73,8 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 15
-nmap <C-v> :Lexplore<CR>
-imap <C-v> <Esc>:Lexplore<CR>
+nmap <C-c> :Lexplore<CR>
+imap <C-c> <Esc>:Lexplore<CR>
 
 
 """"""""""""""""""""""""""""
@@ -93,3 +95,4 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
+set ttymouse=sgr
