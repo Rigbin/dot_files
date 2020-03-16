@@ -17,6 +17,12 @@ sysupdate_function() {
   fi
 }
 
+get_env() {
+  # this function will return an env-var inside a .env-file
+  # example: API_TOKEN=`get_env API_TOKEN .env`
+  echo ${$(grep $1 $2 | xargs)#*=}
+}
+
 
 # colors
 if [ -x /usr/bin/dircolors ]; then
@@ -48,7 +54,6 @@ alias free="free -h"
 alias df="df -h"
 alias du="du -h"
 export LESS="-F -X $LESS" ## let less display information, that fits the screen directly
-alias se="sudoedit"
 
 # git
 alias gits="git status"
@@ -85,3 +90,4 @@ if [ -d "$JAVA13" ]; then
   alias javac13="${JAVA13}/bin/javac"
 fi
 
+# vim: ft=bash
