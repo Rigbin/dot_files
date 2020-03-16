@@ -48,6 +48,7 @@ alias free="free -h"
 alias df="df -h"
 alias du="du -h"
 export LESS="-F -X $LESS" ## let less display information, that fits the screen directly
+alias se="sudoedit"
 
 # git
 alias gits="git status"
