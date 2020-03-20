@@ -11,7 +11,7 @@ my_ps() {
 
 sysupdate_function() {
   if [ -f /etc/pacman.conf ]; then
-    sudo pacman -Syu --noconfirm && sudo pacman -Qdtq --noconfirm | sudo pacman -Rs - --noconfirm && sudo pacman -Sc --noconfirm
+    sudo pacman -Syyuu --noconfirm && sudo pacman -Qdtq --noconfirm | sudo pacman -Rs - --noconfirm && sudo pacman -Sc --noconfirm
   elif [ -d /etc/apt ]; then
     sudo apt update && sudo apt dist-upgrate -y && sudo apt autoremove -y && sudo apt autoclean
   fi
@@ -20,7 +20,23 @@ sysupdate_function() {
 get_env() {
   # this function will return an env-var inside a .env-file
   # example: API_TOKEN=`get_env API_TOKEN .env`
-  echo ${$(grep $1 $2 | xargs)#*=}
+  if [ $# -ge 1 ]; then
+    if [ -z "$2" ]; then
+      FILE=".env"
+    else 
+      FILE="$2"
+    fi
+    if [ -f $FILE ]; then
+      VAR=$(egrep "^${1}=" $FILE | xargs)
+      echo ${VAR#*=}
+    else
+      >&2 echo "$FILE not found!"
+      return 1
+    fi
+  else 
+    >&2 echo "usage: $0 <VAR> [env-file]"
+    return 1
+  fi
 }
 
 
@@ -53,6 +69,7 @@ fi
 alias free="free -h"
 alias df="df -h"
 alias du="du -h"
+alias se="sudoedit"
 export LESS="-F -X $LESS" ## let less display information, that fits the screen directly
 
 # git
@@ -62,7 +79,7 @@ alias gitc="git commit"
 alias gita="git add ."
 alias gitr="git reset HEAD -- " # unstage files
 alias gitl="git log --oneline --decorate --all --graph"
-if [[ -f ~/.git_init ]]; then 
+if [ -f ~/.git_init ]; then 
   . ~/.git_init
 fi 
 
@@ -72,22 +89,22 @@ if [ -x /usr/bin/tmux ]; then
 fi
 
 # java
+for V in {7..20}; do
+  OPENJDK="/usr/lib/jvm/java-${V}-openjdk"
+  if [ -d $OPENJDK ]; then
+    alias java${V}=${OPENJDK}/bin/java
+    alias javac${V}=${OPENJDK}/bin/javac
+  fi
+  ORACLEJDP="/usr/lib/jvm/java-${V}-jdk"
+  if [ -d $ORACLEJDP ]; then
+    alias oj${V}=${ORACLEJDK}/bin/java
+    alias ojc${V}=${ORACLEJDK}/bin/javac
+  fi
+done
 JAVA8="/usr/lib/jvm/java-8-openjdk"
 if [ -d "$JAVA8" ]; then
-  alias java8="${JAVA8}/bin/java"
-  alias javac8="${JAVA8}/bin/javac"
   export JAVA_HOME="$JAVA8"
   PATH=${JAVA_HOME}bin:$PATH
-fi
-JAVA11="/usr/lib/jvm/java-11-openjdk"
-if [ -d "$JAVA11" ]; then
-  alias java11="${JAVA11}/bin/java"
-  alias javac11="${JAVA11}/bin/javac"
-fi
-JAVA13="/usr/lib/jvm/java-13-jdk"
-if [ -d "$JAVA13" ]; then
-  alias java13="${JAVA13}/bin/java"
-  alias javac13="${JAVA13}/bin/javac"
 fi
 
 # vim: ft=bash
