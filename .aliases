@@ -94,11 +94,13 @@ for V in {7..20}; do
   if [ -d $OPENJDK ]; then
     alias java${V}=${OPENJDK}/bin/java
     alias javac${V}=${OPENJDK}/bin/javac
+    alias jh${V}="JAVA_HOME=${OPENJDK}"
   fi
   ORACLEJDP="/usr/lib/jvm/java-${V}-jdk"
   if [ -d $ORACLEJDP ]; then
     alias oj${V}=${ORACLEJDK}/bin/java
     alias ojc${V}=${ORACLEJDK}/bin/javac
+    alias ojh${V}="JAVA_HOME=${ORACLEJDK}"
   fi
 done
 JAVA8="/usr/lib/jvm/java-8-openjdk"
